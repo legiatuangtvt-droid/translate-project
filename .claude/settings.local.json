@@ -1,0 +1,39 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run dev:*)",
+      "Bash(npm install:*)",
+      "Bash(node -e:*)",
+      "Bash(set:*)",
+      "Bash(npm run postinstall:*)",
+      "Bash(npx node-gyp rebuild:*)",
+      "Bash(npx electron-rebuild:*)",
+      "Bash(npx electron-vite:*)",
+      "Bash(node_modules/.bin/electron:*)",
+      "Bash(ls:*)",
+      "Bash(d:/Project/translate-project/node_modules/electron/dist/electron.exe --version)",
+      "Bash(node_modules/electron/dist/electron.exe:*)",
+      "Bash(dir:*)",
+      "WebFetch(domain:gist.github.com)",
+      "WebFetch(domain:github.com)",
+      "Bash(npx next dev:*)",
+      "Bash(curl:*)",
+      "Bash(netstat:*)",
+      "Bash(findstr:*)",
+      "Bash(tasklist:*)",
+      "Bash(taskkill:*)",
+      "Bash(timeout:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npx next build:*)",
+      "Bash(cmd /c \"taskkill /PID 19344 /F\")",
+      "Bash(cmd /c \"taskkill /PID 19344 /T /F\")",
+      "Bash(wmic process where \"ProcessId=19344\" get Name,CommandLine)",
+      "Bash(cmd /c \"wmic process where ProcessId=19344 get Name,CommandLine\")",
+      "Bash(powershell -Command:*)",
+      "Bash(cd:*)",
+      "Bash(git remote add:*)",
+      "Bash(gh repo view:*)",
+      "Bash(git add:*)"
+    ]
+  }
+}
