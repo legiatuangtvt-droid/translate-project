@@ -230,11 +230,12 @@ translate-project/
 - [x] UI polish: responsive sidebar, toolbar wrap, bottom nav, loading spinner
 - [x] Error handling: load error, translation error + retry, empty states
 
-**Milestone 6: Firebase & Sync**
-- [ ] Firebase Firestore setup
-- [ ] Auth (email, Google)
-- [ ] Sync logic (novels, chapters, glossary)
-- [ ] Cloud backup & restore
+**Milestone 6: Firebase & Sync** ✅ HOÀN THÀNH
+- [x] Firebase Firestore setup (firebase SDK, config, env vars)
+- [x] Auth (Google Sign-in only)
+- [x] Sync logic (backup/restore: novels, chapters, glossary, reading_progress, settings)
+- [x] Cloud backup & restore (manual, batch writes, progress tracking)
+- [x] CloudSyncSection UI trong Settings page
 
 **Milestone 7: Mở rộng**
 - [ ] Qidian (起点) crawler
@@ -278,6 +279,7 @@ translate-project/
 | 2026-02-07 | Implement Hán-Việt converter, glossary system |
 | 2026-02-08 | UI pages (Library, Search, Translate, Paste, Settings) |
 | 2026-02-09 | Cập nhật PLAN.md, implement Reader page (Milestone 5) |
+| 2026-02-09 | Firebase & Sync: Google Auth, Firestore backup/restore, CloudSyncSection UI (Milestone 6) |
 
 ---
 

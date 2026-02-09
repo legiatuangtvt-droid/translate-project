@@ -311,6 +311,82 @@ export class Database {
     return { novelId: row.novel_id, chapterId: row.chapter_id, position: row.position, lastRead: new Date(row.last_read) }
   }
 
+  // Sync: Export/Import All Data
+  getAllChapters(): Chapter[] {
+    if (!this.db) throw new Error('Database not initialized')
+    const rows = this.db.prepare('SELECT * FROM chapters ORDER BY novel_id, idx').all() as any[]
+    return rows.map((row) => this.rowToChapter(row))
+  }
+
+  getAllGlossary(): GlossaryEntry[] {
+    if (!this.db) throw new Error('Database not initialized')
+    const rows = this.db.prepare('SELECT * FROM glossary').all() as any[]
+    return rows.map((row) => ({
+      id: row.id, original: row.original, translated: row.translated,
+      vietnamese: row.vietnamese || undefined,
+      type: row.type, novelId: row.novel_id || undefined
+    }))
+  }
+
+  getAllProgress(): ReadingProgress[] {
+    if (!this.db) throw new Error('Database not initialized')
+    const rows = this.db.prepare('SELECT * FROM reading_progress').all() as any[]
+    return rows.map((row) => ({
+      novelId: row.novel_id, chapterId: row.chapter_id,
+      position: row.position, lastRead: new Date(row.last_read)
+    }))
+  }
+
+  exportAll() {
+    return {
+      novels: this.getAllNovels(),
+      chapters: this.getAllChapters(),
+      glossary: this.getAllGlossary(),
+      readingProgress: this.getAllProgress(),
+      settings: this.getSettings()
+    }
+  }
+
+  importAll(data: {
+    novels: Novel[]
+    chapters: Chapter[]
+    glossary: GlossaryEntry[]
+    readingProgress: ReadingProgress[]
+    settings: AppSettings | null
+  }): void {
+    if (!this.db) throw new Error('Database not initialized')
+    const doImport = this.db.transaction(() => {
+      // Clear all tables (order matters: children before parents)
+      this.db!.exec('DELETE FROM reading_progress')
+      this.db!.exec('DELETE FROM glossary')
+      this.db!.exec('DELETE FROM chapters')
+      this.db!.exec('DELETE FROM novels')
+      this.db!.exec('DELETE FROM settings')
+
+      // Insert novels
+      for (const novel of data.novels) {
+        this.saveNovel(novel)
+      }
+      // Insert chapters (batch)
+      if (data.chapters.length > 0) {
+        this.saveChapters(data.chapters)
+      }
+      // Insert glossary
+      for (const entry of data.glossary) {
+        this.saveGlossaryEntry(entry)
+      }
+      // Insert reading progress
+      for (const progress of data.readingProgress) {
+        this.saveProgress(progress)
+      }
+      // Insert settings
+      if (data.settings) {
+        this.saveSettings(data.settings)
+      }
+    })
+    doImport()
+  }
+
   // Settings
   saveSettings(settings: AppSettings): void {
     if (!this.db) throw new Error('Database not initialized')

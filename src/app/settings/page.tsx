@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import CloudSyncSection from '@/components/settings/CloudSyncSection'
 
 interface Settings {
   theme: string
@@ -127,6 +128,11 @@ export default function SettingsPage() {
         >
           {saved ? 'Đã lưu!' : 'Lưu cài đặt'}
         </button>
+
+        {/* Cloud Sync */}
+        <section className="bg-gray-800 rounded-lg p-6">
+          <CloudSyncSection />
+        </section>
       </div>
     </div>
   )

@@ -62,6 +62,21 @@ export interface AppSettings {
   ollamaEndpoint?: string
 }
 
+// Sync types
+export interface SyncProgress {
+  phase: 'novels' | 'chapters' | 'glossary' | 'progress' | 'settings' | 'done'
+  current: number
+  total: number
+  message: string
+}
+
+export interface BackupInfo {
+  lastBackupAt: string
+  novelCount: number
+  chapterCount: number
+  glossaryCount: number
+}
+
 // Han Viet types (NEW)
 export interface HanVietSegment {
   original: string
